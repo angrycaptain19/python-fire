@@ -54,10 +54,8 @@ def IsSimpleGroup(component):
     purposes.
   """
   assert isinstance(component, dict)
-  for unused_key, value in component.items():
-    if not IsValue(value) and not isinstance(value, (list, dict)):
-      return False
-  return True
+  return not any(not IsValue(value) and not isinstance(value, (list, dict))
+                 for unused_key, value in component.items())
 
 
 def HasCustomStr(component):

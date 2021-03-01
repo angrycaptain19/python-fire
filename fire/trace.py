@@ -301,15 +301,14 @@ class FireTraceElement(object):
   def __str__(self):
     if self.HasError():
       return self.ErrorAsStr()
-    else:
-      # Format is: {action} "{target}" ({filename}:{lineno})
-      string = self._action
-      if self._target is not None:
-        string += ' "{target}"'.format(target=self._target)
-      if self._filename is not None:
-        path = self._filename
-        if self._lineno is not None:
-          path += ':{lineno}'.format(lineno=self._lineno)
+    # Format is: {action} "{target}" ({filename}:{lineno})
+    string = self._action
+    if self._target is not None:
+      string += ' "{target}"'.format(target=self._target)
+    if self._filename is not None:
+      path = self._filename
+      if self._lineno is not None:
+        path += ':{lineno}'.format(lineno=self._lineno)
 
-        string += ' ({path})'.format(path=path)
-      return string
+      string += ' ({path})'.format(path=path)
+    return string

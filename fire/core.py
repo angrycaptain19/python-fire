@@ -276,11 +276,8 @@ def _DisplayError(component_trace):
   """Prints the Fire trace and the error to stdout."""
   result = component_trace.GetResult()
 
-  output = []
-  show_help = False
-  for help_flag in ('-h', '--help'):
-    if help_flag in component_trace.elements[-1].args:
-      show_help = True
+  show_help = any(help_flag in component_trace.elements[-1].args
+                  for help_flag in ('-h', '--help'))
 
   if show_help:
     command = '{cmd} -- --help'.format(cmd=component_trace.GetCommand())
@@ -288,7 +285,7 @@ def _DisplayError(component_trace):
         cmd=pipes.quote(command)), file=sys.stderr)
     help_text = helptext.HelpText(result, trace=component_trace,
                                   verbose=component_trace.verbose)
-    output.append(help_text)
+    output = [help_text]
     Display(output, out=sys.stderr)
   else:
     print(formatting.Error('ERROR: ')
@@ -322,7 +319,7 @@ def _DictAsString(result, verbose=False):
   if not result_visible:
     return '{}'
 
-  longest_key = max(len(str(key)) for key in result_visible.keys())
+  longest_key = max(len(str(key)) for key in result_visible)
   format_string = '{{key:{padding}s}} {{value}}'.format(padding=longest_key + 1)
 
   lines = []

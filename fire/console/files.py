@@ -104,10 +104,7 @@ def FindExecutableOnPath(executable, path=None, pathext=None,
     raise ValueError('FindExecutableOnPath({0},...) failed because first '
                      'argument must not have a path.'.format(executable))
 
-  if path is None:
-    effective_path = _GetSystemPath()
-  else:
-    effective_path = path
+  effective_path = _GetSystemPath() if path is None else path
   effective_pathext = (pathext if pathext is not None
                        else _PlatformExecutableExtensions(
                            platforms.OperatingSystem.Current()))

@@ -513,11 +513,7 @@ def _GetMaps(name, commands, default_options):
       subcommand = command[-2]
       arg = _FormatForCommand(command[-1])
 
-      if _IsOption(arg):
-        args_map = options_map
-      else:
-        args_map = subcommands_map
-
+      args_map = options_map if _IsOption(arg) else subcommands_map
       args_map[subcommand].add(arg)
       args_map[subcommand.replace('_', '-')].add(arg)
 

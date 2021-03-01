@@ -66,10 +66,7 @@ class TypedText(object):
     self.text_type = text_type
 
   def __len__(self):
-    length = 0
-    for text in self.texts:
-      length += len(text)
-    return length
+    return sum(len(text) for text in self.texts)
 
   def __add__(self, other):
     texts = [self, other]

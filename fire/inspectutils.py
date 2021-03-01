@@ -314,10 +314,7 @@ def _InfoBackup(component):
   Returns:
     A dict with information about the component.
   """
-  info = {}
-
-  info['type_name'] = type(component).__name__
-  info['string_form'] = str(component)
+  info = {'type_name': type(component).__name__, 'string_form': str(component)}
 
   filename, lineno = GetFileAndLine(component)
   info['file'] = filename
@@ -350,8 +347,7 @@ def IsNamedTuple(component):
   if not isinstance(component, tuple):
     return False
 
-  has_fields = bool(getattr(component, '_fields', None))
-  return has_fields
+  return bool(getattr(component, '_fields', None))
 
 
 def GetClassAttrsDict(component):

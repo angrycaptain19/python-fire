@@ -299,8 +299,9 @@ class Platform(object):
       can be None if it could not be determined.
     """
     return Platform(
-        os_override if os_override else OperatingSystem.Current(),
-        arch_override if arch_override else Architecture.Current())
+        os_override or OperatingSystem.Current(),
+        arch_override or Architecture.Current(),
+    )
 
   def UserAgentFragment(self):
     """Generates the fragment of the User-Agent that represents the OS.

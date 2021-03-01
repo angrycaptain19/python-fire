@@ -64,15 +64,13 @@ def NeedsCustomDescription(component):
     Whether the component should use a custom description and summary.
   """
   type_ = type(component)
-  if (type_ in six.string_types
+  return (type_ in six.string_types
       or type_ in six.integer_types
       or type_ is six.text_type
       or type_ is six.binary_type
       or type_ in (float, complex, bool)
       or type_ in (dict, tuple, list, set, frozenset)
-     ):
-    return True
-  return False
+     )
 
 
 def GetStringTypeSummary(obj, available_space, line_length):

@@ -652,11 +652,9 @@ def GetConsoleAttr(encoding=None, reset=False):
     The global ConsoleAttr state object.
   """
   attr = ConsoleAttr._CONSOLE_ATTR_STATE  # pylint: disable=protected-access
-  if not reset:
-    if not attr:
-      reset = True
-    elif encoding and encoding != attr.GetEncoding():
-      reset = True
+  if not reset and (not attr
+                    or attr and encoding and encoding != attr.GetEncoding()):
+    reset = True
   if reset:
     attr = ConsoleAttr(encoding=encoding)
     ConsoleAttr._CONSOLE_ATTR_STATE = attr  # pylint: disable=protected-access

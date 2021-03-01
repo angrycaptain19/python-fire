@@ -109,10 +109,7 @@ def _NameSection(component, info, trace=None, verbose=False):
     summary = custom_descriptions.GetSummary(component, available_space,
                                              LINE_LENGTH)
 
-  if summary:
-    text = current_command + ' - ' + summary
-  else:
-    text = current_command
+  text = current_command + ' - ' + summary if summary else current_command
   return ('NAME', text)
 
 
@@ -273,12 +270,12 @@ def _UsageDetailsSections(component, actions_grouped_by_kind):
 
 def _GetSummary(info):
   docstring_info = info['docstring_info']
-  return docstring_info.summary if docstring_info.summary else None
+  return docstring_info.summary or None
 
 
 def _GetDescription(info):
   docstring_info = info['docstring_info']
-  return docstring_info.description if docstring_info.description else None
+  return docstring_info.description or None
 
 
 def _GetArgsAndFlagsString(spec, metadata):
@@ -332,11 +329,10 @@ def _GetArgsAndFlagsString(spec, metadata):
 
 def _GetPossibleActions(actions_grouped_by_kind):
   """The list of possible action kinds."""
-  possible_actions = []
-  for action_group in actions_grouped_by_kind:
-    if action_group.members:
-      possible_actions.append(action_group.name)
-  return possible_actions
+  return [
+      action_group.name for action_group in actions_grouped_by_kind
+      if action_group.members
+  ]
 
 
 def _GetPossibleActionsString(possible_actions):
@@ -375,10 +371,9 @@ def _GetActionsGroupedByKind(component, verbose=False):
 def _GetCurrentCommand(trace=None, include_separators=True):
   """Returns current command for the purpose of generating help text."""
   if trace:
-    current_command = trace.GetCommand(include_separators=include_separators)
+    return trace.GetCommand(include_separators=include_separators)
   else:
-    current_command = ''
-  return current_command
+    return ''
 
 
 def _CreateOutputSection(name, content):

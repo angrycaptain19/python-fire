@@ -69,12 +69,10 @@ def _AvailableString(variables, verbose=False):
   lists = [
       ('Modules', modules),
       ('Objects', other)]
-  liststrs = []
-  for name, varlist in lists:
-    if varlist:
-      liststrs.append(
-          '{name}: {items}'.format(name=name, items=', '.join(sorted(varlist))))
-
+  liststrs = [
+      '{name}: {items}'.format(name=name, items=', '.join(sorted(varlist)))
+      for name, varlist in lists if varlist
+  ]
   return (
       'Fire is starting a Python REPL with the following objects:\n'
       '{liststrs}\n'
